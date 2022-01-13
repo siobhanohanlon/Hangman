@@ -1,11 +1,13 @@
 #include <iostream>
+#include <time.h>
+#include <stdlib.h>
 using namespace std;
 
 char d[8] = { 191, 218, 217, 192, 179, 196, 195, 180};
 //tr, tl, br, bl, sides, top/b, LTjun, RTjun
 //0,  1,  2,  3,    4,    5,     6,      7
 
-void Line(int decide, string message)
+void Borders(int decide, string message)
 {
 	if (decide == 1)
 	{
@@ -19,6 +21,7 @@ void Line(int decide, string message)
 		bool front = true;
 		int totalSpace = 33;
 
+		cout << endl << d[4];
 		for (int i = message.length(); i < totalSpace; i++)
 		{
 			if (front)
@@ -33,100 +36,90 @@ void Line(int decide, string message)
 		}
 		cout << message.c_str() << d[4];
 	}
-}
+	else if (decide == 2)
+	{
+		cout << endl << d[4];
+		cout << "          " << d[1];
+		for (int i = 0; i < 11; i++)
+		{
+			cout << d[5];
+		}
+		cout << d[0] << "          " << d[4] << endl << d[4];
+		cout << "          " << d[4] << "           " << d[4] << "          " << d[4];
 
+	}
+}
+//
 void DrawHangMan(int guess)
 {
 	//Rope
 	if (guess >= 1)
 	{
-		cout << endl << d[4];
-		Line(0, "|");
+		Borders(0, "|");
 	}
 	else
 	{
-		Line(0, "");
+		Borders(0, "");
 	}
 	if (guess >= 2)
 	{
-		cout << endl << d[4];
-		Line(0, "|");
+		Borders(0, "|");
 	}
 	else
 	{
-		Line(0, "");
+		Borders(0, "");
 	}
 
 	//Head
 	if (guess >= 3)
 	{
-		cout << endl << d[4];
-		Line(0, "O");
+		Borders(0, "O");
 	}
 	else
 	{
-		Line(0, "");
+		Borders(0, "");
 	}
 
 	//Upper Body
 	if (guess == 4)
 	{
-		cout << endl << d[4];
-		Line(0, "/");
+		Borders(0, "/");
 	}
 	else if (guess == 5)
 	{
-		cout << endl << d[4];
-		Line(0, "/| ");
+		Borders(0, "/| ");
 	}
 	else if (guess >= 6)
 	{
-		cout << endl << d[4];
-		Line(0, "/|\\");
+		Borders(0, "/|\\");
 	}
 	else
 	{
-		Line(0, "");
+		Borders(0, "");
 	}
 
 	//Lower Body
 	if (guess >= 7)
 	{
-		cout << endl << d[4];
-		Line(0, "|");
+		Borders(0, "|");
 
 	}
 	else 
 	{
-		cout << endl << d[4];
-		Line(0, "");
+		Borders(0, "");
 	}
 	if (guess == 8)
 	{
-		cout << endl << d[4];
-		Line(0, "/  ");
+		Borders(0, "/  ");
 	}
 	else if (guess == 9)
 	{
-		cout << endl << d[4];
-		Line(0, "/ \\ ");
+		Borders(0, "/ \\ ");
 	}
 	else
 	{
-		Line(0, "");
+		Borders(0, "");
 	}
-}
-
-void DisplayBoard(int guess)
-{
-	cout <<  d[1];
-	Line(1, "");
-	cout << d[0] << endl << d[4];
-	Line(0, "HANGMAN");
-	cout << endl << d[6];
-	Line(1, "");
-	cout << d[7];
-	DrawHangMan(9);
 }
 
 void DisplayLetters(string input, char from, char to)
@@ -138,39 +131,82 @@ void DisplayLetters(string input, char from, char to)
 		//Using
 		if (input.find(i) == string::npos)
 		{
-			search += i + " ";
+			search += i;
+			search += " ";
 		}
 		//Already Used
 		else
 		{
-			search += " ";
+			search += "  ";
 		}
 	}
+	Borders(0, search);
 }
 
-/*
-|         +----------+            |
-|         |          |            |
-+---------------------------------+
-|        Available letters        |
-+---------------------------------+
-|     A B C D E F G H I J K L M   |
-|     N O P Q R S T U V W X Y Z   |
-+---------------------------------+
-|         Guess the word          |
-+---------------------------------+
-| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |
-+---------------------------------+
->
-*/
-
-void PlayGame()
+void DisplayBoard(int guess, string input)
 {
+	cout <<  d[1];
+	Borders(1, "");
+	cout << d[0];
+	Borders(0, "HANGMAN");
+	cout << endl << d[6];
+	Borders(1, "");
+	cout << d[7];
+	DrawHangMan(9);
+	Borders(2, "");
+	cout << endl << d[6];
+	Borders(1, "");
+	cout << d[7];
+	Borders(0, "Available Letters");
+	cout << endl << d[6];
+	Borders(1, "");
+	cout << d[7];
+	DisplayLetters(input, 'A', 'M');
+	DisplayLetters(input, 'N', 'Z');
+	cout << endl << d[6];
+	Borders(1, "");
+	cout << d[7];
+	Borders(0, "Guess the Word");
+	cout << endl << d[6];
+	Borders(1, "");
+	cout << d[7];	
+}
 
+void PlayGame(string word, string input)
+{
+	bool won = true;
+	string s;
+
+	for (int i = 0; i < word.length(); i++)
+	{
+		if (input.find(word[i]) == string::npos)
+		{
+			won = false;
+			s += "_ ";
+		}
+		else
+		{
+			s += word[i];
+			s += " ";
+		}
+	}
+	Borders(0, s);
+	cout << endl << d[3];
+	Borders(1, "");
+	cout << d[2] << endl << endl;
+}
+
+string ChooseWord()
+{
+	return "";
 }
 
 void main()
 {
-	DisplayBoard(0);
-	PlayGame();
+	string word;
+
+	DisplayBoard(0, "ALEXA");
+	word = "ALEXIS";
+		//ChooseWord();
+	PlayGame(word, "ALEXA");
 }
