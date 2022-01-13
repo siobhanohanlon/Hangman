@@ -129,13 +129,26 @@ void DisplayBoard(int guess)
 	DrawHangMan(9);
 }
 
+void DisplayLetters(string input, char from, char to)
+{
+	string search;
+
+	for (char i = from; i <= to; i++)
+	{
+		//Using
+		if (input.find(i) == string::npos)
+		{
+			search += i + " ";
+		}
+		//Already Used
+		else
+		{
+			search += " ";
+		}
+	}
+}
+
 /*
-|               |                 |
-|               |                 |
-|               O                 |
-|              /|\                |
-|               |                 |
-|              / \                |
 |         +----------+            |
 |         |          |            |
 +---------------------------------+
@@ -150,7 +163,14 @@ void DisplayBoard(int guess)
 +---------------------------------+
 >
 */
+
+void PlayGame()
+{
+
+}
+
 void main()
 {
 	DisplayBoard(0);
+	PlayGame();
 }
