@@ -1,11 +1,12 @@
 #include <iostream>
+#include <fstream>
 #include <time.h>
 #include <stdlib.h>
+#include <string>
 using namespace std;
 
 char d[8] = { 191, 218, 217, 192, 179, 196, 195, 180};
-//tr, tl, br, bl, sides, top/b, LTjun, RTjun
-//0,  1,  2,  3,    4,    5,     6,      7
+char w[];
 
 void Borders(int decide, string message)
 {
@@ -196,8 +197,30 @@ void PlayGame(string word, string input)
 	cout << d[2] << endl << endl;
 }
 
-string ChooseWord()
+string LoadWord()
 {
+	string word;
+	int arrLength, lineCount;
+
+	ifstream wordFile;
+
+	wordFile.open("Words.txt");
+
+	if (!wordFile)
+	{
+		//cerr prints error message
+		cerr << "File could not be opened!";
+	}
+	else
+	{
+		while (std::getline(wordFile, word))
+		{
+			for (int i = 0; i < word.length(); i++)
+			{
+
+			}
+		}
+	}
 	return "";
 }
 
@@ -207,6 +230,6 @@ void main()
 
 	DisplayBoard(0, "ALEXA");
 	word = "ALEXIS";
-		//ChooseWord();
+		//LoadWord();
 	PlayGame(word, "ALEXA");
 }
